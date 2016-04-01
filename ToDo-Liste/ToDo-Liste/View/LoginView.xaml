@@ -1,0 +1,39 @@
+﻿<Window x:Class="ToDo_Liste.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        x:Name="Start"
+        mc:Ignorable="d"
+        Title="Anmelden" Height="400" Width="400"
+        ResizeMode="NoResize">
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border BorderThickness="1" CornerRadius="4,4,4,4" BorderBrush="BlueViolet">
+            <StackPanel Margin="5">
+                <Grid Margin="2,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Benutzername:" VerticalAlignment="Top" />
+                    <ComboBox Grid.Column="1" x:Name="comboBoxBenutzername" Width="150" ItemsSource="{Binding DTUsers}" SelectedItem="{Binding SelectedUser}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Nachname}"/>
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding Vorname}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Button Content="Anmelden" Width="120" Height="25" Margin="5,5" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding Login}"/>
+        <!--<Button Content="Benutzer verwalten" Width="120" Height="25" Margin="5,5" Command="{Binding Registrieren}"/>-->
+        <Button Content="Datenbank suchen" Width="120" Height="25" Margin="5,5" Command="{Binding DBChange}"/>
+    </StackPanel>
+</Window>

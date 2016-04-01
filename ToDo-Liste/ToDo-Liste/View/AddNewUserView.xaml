@@ -1,0 +1,45 @@
+﻿<Window x:Class="ToDo_Liste.View.AddNewUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        mc:Ignorable="d"
+        x:Name="NewUser"
+        Title="Neuen Benutzer hinzufügen"
+        Height="300" 
+        Width="400">
+
+    <Grid Margin="6" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="lblVorname" Content="Vorname:" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="lblNachname" Content="Nachname:" Grid.Column="0" Grid.Row="1"/>
+        <Label x:Name="lblMail" Content="Mailadresse:" Grid.Column="0" Grid.Row="2"/>
+        <Label x:Name="lblInitialien" Content="Initialien:" Grid.Column="0" Grid.Row="3"/>
+        <Label x:Name="lblPassword" Content="Password:" Grid.Column="0" Grid.Row="4"/>
+
+        <TextBox x:Name="txtbVorname" Height="23" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" Text="{Binding Vorname}"/>
+        <TextBox x:Name="txtbNachname" Height="23" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center" Text="{Binding Nachname}"/>
+        <TextBox x:Name="txtbMail" Height="23" Grid.Column="1" Grid.Row="2" VerticalContentAlignment="Center" Text="{Binding Mail}"/>
+
+        <TextBox x:Name="txtbInitialien" Height="23" Grid.Column="1" Grid.Row="3" VerticalContentAlignment="Center" Text="{Binding Initialien}" Validation.ErrorTemplate="{StaticResource }"/>
+
+        <TextBox x:Name="txtbPassword" Height="23" Grid.Column="1" Grid.Row="4" VerticalContentAlignment="Center" Text="{Binding Password}" />
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Button x:Name="btnSave" Content="Speichern"  Width="75" Margin="3,1" Command="{Binding SaveCommand}" />
+            <Button x:Name="btnChancel" Content="Abbrechen" Width="75" Margin="3,1" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

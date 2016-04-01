@@ -1,0 +1,110 @@
+﻿<Window x:Class="ToDo_Liste.View.NewTaskView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        x:Name="NewTask"
+        mc:Ignorable="d"
+        Title="New Task" Height="700" Width="850">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderBrush" Value="BlanchedAlmond"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="5"/>
+            <!--Leerzeile als Trenner-->
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="5"/>
+            <!--Leerzeile als Trenner-->
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--#region Labels-->
+        <Label Grid.Column="0" Grid.Row="1" Content="Jira-Ticket" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Typ" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Anforderer" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="Verantwortlicher" Style="{StaticResource LabelStyle}"/>
+
+        <Label Grid.Column="0" Grid.Row="0" Content="Überschrift" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="3" Grid.Row="1" Content="Priorität" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="3" Grid.Row="2" Content="Status" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="3" Grid.Row="4" Content="Erstellungsdatum" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Column="3" Grid.Row="5" Content="Zieltermin" Style="{StaticResource LabelStyle}"/>
+        <!--#endregion-->
+
+        <!--#region Bearbeitungselemente-->
+        <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtbJiraNr" Style="{StaticResource TextBoxStyle}" Text="{Binding JiraTicketNr}"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cbTyp" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding TypenList}" SelectedItem="{Binding Typ}"/>
+        <ComboBox Grid.Column="1" Grid.Row="4" x:Name="cbAnforderer" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Users}" SelectedItem="{Binding Anforderer, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Nachname}"/>
+                        <TextBlock Text=", "/>
+                        <TextBlock Text="{Binding Vorname}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox Grid.Column="1" Grid.Row="5" x:Name="cbVerantwortlicher" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Users}" SelectedItem="{Binding Verantwortlicher, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Nachname}"/>
+                        <TextBlock Text=", "/>
+                        <TextBlock Text="{Binding Vorname}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" x:Name="cbÜberschrift" Style="{StaticResource TextBoxStyle}" Text="{Binding Überschrift}"/>
+        <ComboBox Grid.Column="4" Grid.Row="1" x:Name="cbPriorität" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding PrioritätenList}" SelectedItem="{Binding Priorität}"/>
+        <ComboBox Grid.Column="4" Grid.Row="2" x:Name="cbStatus" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding StatusList}" SelectedItem="{Binding Status}"/>
+        <DatePicker Grid.Column="4" Grid.Row="4" x:Name="dpErstellungsdatum" Style="{StaticResource DatePickerStyle}" Text="{Binding Erstellungsdatum}"/>
+        <DatePicker Grid.Column="4" Grid.Row="5" x:Name="dpZieldatum" Style="{StaticResource DatePickerStyle}" Text="{Binding Zieldatum}"/>
+
+        <TextBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" x:Name="txtbBeschreibung" Margin="5" Text="{Binding Beschreibung}" TextWrapping="Wrap" AcceptsReturn="True"/>
+        <!--#endregion-->
+
+        <!--#region Buttons-->
+        <StackPanel Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Orientation="Horizontal" Margin="0,2">
+            <Button Content="Speichern" Margin="4,0" Command="{Binding SaveCommand}"/>
+            <Button Content="Abbrechen" Margin="4,0" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+        <!--#endregion-->
+    </Grid>
+</Window>

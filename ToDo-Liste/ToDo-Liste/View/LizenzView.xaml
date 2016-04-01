@@ -1,0 +1,17 @@
+﻿<Window x:Class="ToDo_Liste.View.LizenzView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        xmlns:p="clr-namespace:ToDo_Liste.Properties"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="ThreeDBorderWindow"
+        Title="Lizenz" >
+    
+    <StackPanel>
+        <TextBlock Margin="10" Text="{x:Static p:Resources.LizenzText}"/>
+        <Button Content="OK" Width="75" Height="25" Margin="10" IsCancel="True"/>
+    </StackPanel>
+</Window>

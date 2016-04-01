@@ -1,0 +1,45 @@
+﻿<Window x:Class="ToDo_Liste.View.OptionenView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        mc:Ignorable="d"
+        Title="Optionen" Height="400" Width="500">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="300*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="80*"/>
+            </Grid.RowDefinitions>
+            <Label  Grid.Row="0" Grid.Column="0" Content="Datenbank" VerticalAlignment="Center"/>
+            <Label  Grid.Row="1" Grid.Column="0" Content="User List XML" VerticalAlignment="Center"/>
+            <Label  Grid.Row="2" Grid.Column="0" Content="Task List XML" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="3,3" x:Name="cbUseXMLUserList" Content="Benutze XML User Liste" Command="{Binding CheckBoxStatChange}" IsEnabled="False"/>
+            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="3,3" x:Name="cbUseXMLTaskList" Content="Benutze XML Task Liste" Command="{Binding CheckBoxStatChange}" IsEnabled="False"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center" x:Name="txtBoxDatabase" Text="{Binding Path=Optionen.PfadDatenbank, Mode=TwoWay}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center" x:Name="txtBoxUsers" Text="{Binding Path=Optionen.UserListXML, Mode=TwoWay}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center" x:Name="txtBoxTasks" Text="{Binding Path=Optionen.TaskListXML, Mode=TwoWay}"/>
+
+            <Button Grid.Row="0" Grid.Column="2" Content="..." Height="18" Width="25" VerticalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ChangePathDatabase}" />
+            <Button Grid.Row="1" Grid.Column="2" Content="..." Height="18" Width="25" VerticalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ChangePathUsersFile}"/>
+            <Button Grid.Row="2" Grid.Column="2" Content="..." Height="18" Width="25" VerticalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ChangePathTasksFile}"/>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+            <Button Content="Speichern" Height="25" Margin="3,3" Command="{Binding Speichern}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <Button Content="Schließen" Height="25" Margin="3,3" Command="{Binding Abbrechen}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+        </StackPanel>
+
+    </DockPanel>
+</Window>

@@ -1,0 +1,138 @@
+﻿<Window x:Class="ToDo_Liste.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo_Liste.View"
+        x:Name="MainWindow"
+        mc:Ignorable="d"
+        Title="ToDo-Liste" 
+        WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="DetailsTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="AcceptsReturn" Value="False"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Focusable" Value="True"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="DetailsComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="DetailDatePicker" TargetType="DatePicker">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding ShowHelp}"/>
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Datei">
+                <MenuItem Header="_Import aus Excel" Command="{Binding ExcelImport}"/>
+                <MenuItem Header="_Beenden" Command="{Binding CloseCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_Bearbeiten">
+                <MenuItem Header="_Optionen" Command="{Binding ShowOptionen}"/>
+                <MenuItem Header="Benutzer wechseln" Command="{Binding SwitchUser}" />
+                <MenuItem Header="Benutzer verwalten" Command="{Binding UserManagement}"/>
+            </MenuItem>
+            <MenuItem Header="_Hilfe">
+                <MenuItem Header="_Info" Command="{Binding ShowInfos}"/>
+                <MenuItem Header="_Anleitung" Command="{Binding ShowHelp}"/>
+                <MenuItem Header="_Lizenz anzeigen" Command="{Binding ShowLizenz}"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom" Height="40">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Text="Angemeldet als "/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Text="{Binding Vorname}" DataContext="{Binding CurrentUser}"/>
+            </StatusBarItem>
+        </StatusBar>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="650*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="500*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,3,3" Margin="5,5,5.4,4.8" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                <ListBox ItemsSource="{Binding Tasks}" Margin="5" BorderThickness="0" SelectedItem="{Binding TaskDetail}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding TaskID}"/>
+                                <TextBlock Text="      "/>
+                                <TextBlock Text="{Binding Überschrift}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Border Margin="4" Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,3,3" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="200*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" BorderBrush="CornflowerBlue" BorderThickness="2,2" CornerRadius="3" Margin="2">
+                        <StackPanel  Orientation="Horizontal" x:Name="buttonLeiste" Margin="3">
+                            <Button Content="Neues Ticket" x:Name="btnNewTicket" Margin="5,0" Height="25" Command="{Binding AddNewTask}"/>
+                            <Button Content="Ticket löschen" x:Name="btnDeleteTask" Margin="5,0" Height="25" Command="{Binding DeleteTask}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!--#region Textboxes-->
+                    <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="1" Text="{Binding Path=TaskDetail.Überschrift}" x:Name="txtboxÜberschrift" FontSize="18" Style="{StaticResource DetailsTextBoxStyle}" />
+                    <ComboBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" ItemsSource="{Binding TypenList}" SelectedItem="{Binding Path=TaskDetail.Typ}" x:Name="txtboxTyp" Style="{StaticResource DetailsComboBoxStyle}"/>
+                    <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" Text="{Binding Path=TaskDetail.JiraTicketNr}" x:Name="txtboxTicketNr" Style="{StaticResource DetailsTextBoxStyle}"/>
+                    <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" ItemsSource="{Binding PrioritätenList}" SelectedItem="{Binding Path=TaskDetail.Priorität}" x:Name="cboxPrio" Style="{StaticResource DetailsComboBoxStyle}"/>
+                    <ComboBox Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" ItemsSource="{Binding StatusList}" SelectedItem="{Binding Path=TaskDetail.Status}" x:Name="cboxStatus" Style="{StaticResource DetailsComboBoxStyle}"/>
+                    <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" Text="{Binding Path=TaskDetail.Anforderer}" x:Name="cboxAnforderer" Style="{StaticResource DetailsTextBoxStyle}"/>
+
+                    <DatePicker Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" SelectedDate="{Binding Path=TaskDetail.Zieltermin}" x:Name="datepDatum" Style="{StaticResource DetailDatePicker}" SelectedDateFormat="Long"/>
+                    <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="1" Text="{Binding Path=TaskDetail.Verantwortlicher}" x:Name="cboxVerantwortlicher" Style="{StaticResource DetailsTextBoxStyle}"/>
+
+                    <TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Grid.RowSpan="1" Text="{Binding Path=TaskDetail.Beschreibung}" x:Name="txtboxBeschreibung" TextAlignment="Justify" FontSize="14" AcceptsReturn="True" TextWrapping="Wrap" Margin="3" BorderThickness="1" HorizontalAlignment="Stretch"/>
+                    <Button Content="Speichern" Grid.Row="5" Width="75" Height="30" HorizontalAlignment="Left" Margin="3" Command="{Binding SaveTaskDetails}"/>
+                    <!--#endregion-->
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
